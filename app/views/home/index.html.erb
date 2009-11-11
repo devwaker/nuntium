@@ -1,0 +1,33 @@
+<h3>Login to your application:</h3>
+
+<% form_for :application, :url => { :controller => 'home', :action => :login } do |f| %>
+  <p>
+  <%= f.label :name %><br/>
+  <%= f.text_field :name %>
+  </p>
+  <p>
+  <%= f.label :password %><br/>
+  <%= f.password_field :password %>
+  </p>
+  <p style="color:red"><%= flash[:notice] %></p>
+  <%= submit_tag 'Login' %>
+<% end %>
+
+<h3>Or create a new one:</h3>
+
+<% form_for :new_application, :url => { :controller => 'home', :action => :create_application } do |f| %>
+  <%= f.error_messages %>
+  <p>
+  <%= f.label :name %><br/>
+  <%= f.text_field :name %>
+  </p>
+  <p>
+  <%= f.label :password %><br/>
+  <%= f.password_field :password %>
+  </p>
+  <p>
+  <%= f.label :password_confirmation %><br/>
+  <%= f.password_field :password_confirmation %>
+  </p>
+  <%= submit_tag 'Create Application' %>
+<% end %>
