@@ -37,7 +37,7 @@ class Channel < ActiveRecord::Base
     if kind.nil?
       nil
     else
-      eval(kind.capitalize + 'ChannelHandler.new(self)')
+      eval(ActiveSupport::Inflector.camelize(kind) + 'ChannelHandler.new(self)')
     end
   end
   
@@ -55,7 +55,7 @@ class Channel < ActiveRecord::Base
     when Outgoing
       'outgoing'
     when Both
-      'both'
+      'bi-directional'
     end
   end
   
