@@ -1,0 +1,30 @@
+<%= edit_channel_header %>
+
+<% form_for_channel do |f| %>
+  <%= f.error_messages %>
+  <%= f.hidden_field :direction, :value => Channel::Bidirectional %>
+  <%= edit_channel_name f %>
+  <%= edit_channel_protocol f %>
+  <% f.fields_for :configuration do |c| %>
+    <p>
+    <%= c.label :user %><br/>
+    <%= c.text_field :user, :autocomplete => :off, :value => @channel[:configuration][:user] %>
+    </p>
+    <p>
+    <%= c.label :password %><br/>
+    <%= c.password_field :password, :autocomplete => :off, :value => @channel[:configuration][:password] %>
+    </p>
+    <p>
+    <%= c.label :sno %><br/>
+    <%= c.text_field :sno, :value => @channel[:configuration][:sno] %>
+    </p>
+    <p>
+    Callback urls for incoming messages:<br/>
+    <code>/dtac/<%= @account.name %>/incoming</code><br/>
+    <code>/dtac/<%= @account.id %>/incoming</code>
+    </p>
+  <% end %>
+  <%= channel_submit_tag %>
+<% end %>
+
+<%= link_to 'Go back', :controller => :home, :action => :home %>

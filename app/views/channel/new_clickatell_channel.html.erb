@@ -1,0 +1,47 @@
+<%= edit_channel_header %>
+
+<% form_for_channel do |f| %>
+  <%= f.error_messages %>
+  <%= f.hidden_field :direction, :value => Channel::Bidirectional %>
+  <%= edit_channel_name f %>
+  <%= edit_channel_protocol f, 'sms' %>
+  <%= render :partial => 'edit_direction', :locals => {:channel => @channel, :on_change => "clickatell_channel_direction_changed()"} %>
+  <% f.fields_for :configuration do |c| %>
+    <p id="user_container">
+    <%= c.label :user %><br/>
+    <%= c.text_field :user, :autocomplete => :off, :value => @channel[:configuration][:user] %>
+    </p>
+    <p id="password_container">
+    <%= c.label :password %><br/>
+    <%= c.password_field :password, :autocomplete => :off, :value => @channel[:configuration][:password] %>
+    </p>
+    <p>
+    <%= c.label :api_ID %><br/>
+    <%= c.text_field :api_id, :value => @channel[:configuration][:api_id] %>
+    </p>
+    <p id="from_container">
+    <%= c.label :from %><br/>
+    <%= c.text_field :from, :value => @channel[:configuration][:from] %>
+    </p>
+    <p id="concat_container">
+    <%= c.label :concatenation %><br/>
+    <%= c.text_field :concat, :value => @channel[:configuration][:concat] || 3 %>
+    </p>
+    <p id="incoming_password_container">
+    <%= c.label :incoming_password %><br/>
+    <%= c.password_field :incoming_password, :value => @channel[:configuration][:incoming_password] %>
+    </p>
+    <p id="callback_urls">
+    Callback urls for incoming messages (use <a href="http://en.wikipedia.org/wiki/Basic_access_authentication" target="_blank">Basic Http Authentication</a> with channel name and incoming password):<br/>
+    <code>/clickatell/<%= @account.name %>/incoming</code><br/>
+    <code>/clickatell/<%= @account.id %>/incoming</code>
+    </p>
+  <% end %>
+  <%= channel_submit_tag %>
+<% end %>
+
+<%= link_to 'Go back', :controller => :home, :action => :home %>
+
+<script>
+clickatell_channel_direction_changed();
+</script>

@@ -1,0 +1,12 @@
+<%= edit_channel_header %>
+
+<% form_for_channel do |f| %>
+  <%= f.error_messages %>
+  <%= f.hidden_field :direction, :value => Channel::Outgoing %>
+  <%= edit_channel_name f %>
+  <%= edit_channel_protocol f, 'mailto' %>
+  <%= render :partial => 'edit_mail_configuration', :locals => {:f => f} %>
+  <%= channel_submit_tag %>
+<% end %>
+
+<%= link_to 'Go back', :controller => :home, :action => :home %>
