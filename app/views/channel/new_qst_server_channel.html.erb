@@ -1,0 +1,23 @@
+<%= edit_channel_header %>
+
+<% form_for_channel do |f| %>
+  <%= f.error_messages %>
+  <%= edit_channel_name f %>
+  <%= edit_channel_protocol f %>
+  <%= render :partial => 'edit_direction' %>
+  <% f.fields_for :configuration do |c| %>
+    <p>
+    <%= c.label :password %><br/>
+    <%= c.password_field :password, :value => @channel[:configuration][:password] %>
+    </p>
+    <p>
+    <%= c.label :password_confirmation %><br/>
+    <%= c.password_field :password_confirmation, :value => @channel[:configuration][:password_confirmation] %>
+    </p>
+  <% end %>
+  <%= render :partial => 'edit_custom_attributes', :locals => {:f => f} %>
+  <%= render :partial => 'edit_at_rules', :locals => {:f => f} %>
+  <%= channel_submit_tag %>
+<% end %>
+
+<%= link_to 'Go back', :controller => :home, :action => :home %>
